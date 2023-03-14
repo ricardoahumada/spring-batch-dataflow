@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IPropietarioRepo {
     public List<Propietario> findAll();
+    public Propietario save(Propietario prop);
 }

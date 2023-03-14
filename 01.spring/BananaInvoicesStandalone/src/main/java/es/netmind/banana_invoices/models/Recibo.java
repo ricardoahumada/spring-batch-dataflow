@@ -1,7 +1,14 @@
 package es.netmind.banana_invoices.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class Recibo {
     private Long propietario;
     private Date fecha_emision;

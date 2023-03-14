@@ -24,9 +24,22 @@ public class JpaPropietarioRepoTest {
         try {
             List<Propietario> propietarios = propietarioRepo.findAll();
             assertNotNull(propietarios);
-            System.out.println(propietarios);
+            System.out.println("****Propietarios:"+propietarios);
         } catch (Exception e) {
-            System.out.println("Error:" + e.getMessage());
+            fail("Error:" + e.getMessage());
+        }
+
+    }
+
+    @Test
+    public void savePositive() {
+        try {
+            Propietario prop = new Propietario(null, "ricardo", "r@r.com", "1234567", 45);
+            propietarioRepo.save(prop);
+            assertTrue(prop.getPid() > 0);
+            System.out.println("****Propietario:"+prop);
+        } catch (Exception e) {
+            fail("Error:" + e.getMessage());
         }
 
     }

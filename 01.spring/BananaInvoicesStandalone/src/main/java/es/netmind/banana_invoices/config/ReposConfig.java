@@ -9,18 +9,30 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:jdbc.properties")
+@EnableTransactionManagement
 public class ReposConfig {
     @Autowired
     private Environment env;
+
+    @Bean // JPA transaction manager
+    public PlatformTransactionManager transactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(invoicesEmf().getObject());
+        return transactionManager;
+    }
+
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -31,7 +43,6 @@ public class ReposConfig {
     DataSource invoicesDataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
 
-        // DONE: get the "url" property and add it to the DS
         ds.setUrl(env.getProperty("invoices.url"));
 
         ds.setDriverClassName(env.getProperty("invoices.driverClassName"));
@@ -45,7 +56,7 @@ public class ReposConfig {
     public JpaVendorAdapter vendorAdapter() {
         HibernateJpaVendorAdapter va = new HibernateJpaVendorAdapter();
         va.setShowSql(true);
-        va.setGenerateDdl(false);
+        va.setGenerateDdl(true);
         return va;
     }
 
