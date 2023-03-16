@@ -1,6 +1,8 @@
 package es.netmind.banana_invoices.config;
 
 import es.netmind.banana_invoices.persistence.IPropietarioRepo;
+import es.netmind.banana_invoices.persistence.IReciboRepo;
+import es.netmind.banana_invoices.persistence.JPAIReciboRepo;
 import es.netmind.banana_invoices.persistence.JPAPropietarioRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +25,7 @@ import java.util.Properties;
 @PropertySource("classpath:jdbc.properties")
 @EnableTransactionManagement
 public class ReposConfig {
-    @Autowired
+   @Autowired
     private Environment env;
 
     @Bean // JPA transaction manager
@@ -80,7 +82,12 @@ public class ReposConfig {
     }
 
     @Bean
-    public IPropietarioRepo itemRepository() {
+    public IPropietarioRepo propRepository() {
         return new JPAPropietarioRepo();
+    }
+
+     @Bean
+    public IReciboRepo recRepository() {
+        return new JPAIReciboRepo();
     }
 }
