@@ -3,7 +3,12 @@ spring:
     name: ProductsService
 
 server:
-  port: 8080  
+  port: 8080
+  error:
+     include-message: always
+     include-binding-errors: always
+     include-stacktrace: on_param
+     include-exception: false
 
 spring.mvc.pathmatch.matching-strategy: ANT_PATH_MATCHER
 
