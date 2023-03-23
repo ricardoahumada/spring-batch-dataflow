@@ -15,13 +15,13 @@ public class ServicesConfig {
     IPropietarioRepo propietariosRepo;
 
     @Autowired
-    IReciboRepo recivossRepo;
+    IReciboRepo recibosRepo;
 
     @Bean
     public IInventario getInventario(){
         InventarioImpl inventario = new InventarioImpl();
         inventario.setPropietariosRepo(propietariosRepo);
-        inventario.setRecivosRepo(recivossRepo);
+        inventario.setRecibosRepo(recibosRepo);
         return inventario;
     }
 

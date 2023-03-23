@@ -22,7 +22,7 @@ class InventarioImplTest {
 //    @Test
     public void findAllPositive() {
 
-        List<Propietario> propietarios = inventario.findAll();
+        List<Propietario> propietarios = inventario.findAllPropietarios();
         assertNotNull(propietarios);
         System.out.println("Propietarios:" + propietarios);
 

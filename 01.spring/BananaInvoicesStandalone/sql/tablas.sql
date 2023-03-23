@@ -14,21 +14,21 @@ CREATE TABLE `propietario` (
 
 DROP TABLE IF EXISTS `recibo`;
 CREATE TABLE `recibo` (
-  `id` int(11) NOT NULL,
-  `propietario` int(11) NOT NULL,
-  `fecha_emision` timestamp NULL DEFAULT NULL,
-  `fecha_vencimiento` int(11) NOT NULL,
-  `nombre_contacto` varchar(256) DEFAULT NULL,
-  `direccion_contacto` varchar(256) DEFAULT NULL,
-  `direccion_envio` varchar(256) DEFAULT NULL,
-  `nombre_producto` varchar(256) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `base_imponible` double NOT NULL,
   `cantidad` int(11) NOT NULL,
-  `precio_unitario` float NOT NULL,
-  `base_imponible` float NOT NULL,
+  `direccion_contacto` varchar(255) DEFAULT NULL,
+  `direccion_envio` varchar(255) DEFAULT NULL,
+  `estado` bit(1) NOT NULL,
+  `fecha_emision` date DEFAULT NULL,
+  `fecha_vencimiento` date DEFAULT NULL,
   `impuestos` float NOT NULL,
+  `nombre_contacto` varchar(255) DEFAULT NULL,
+  `nombre_producto` varchar(255) DEFAULT NULL,
+  `precio_unitario` float NOT NULL,
   `total` double NOT NULL,
-  `estado` tinyint(1) NOT NULL,
-  `valido` tinyint(1) NOT NULL
+  `valido` bit(1) NOT NULL,
+  `propietario` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
