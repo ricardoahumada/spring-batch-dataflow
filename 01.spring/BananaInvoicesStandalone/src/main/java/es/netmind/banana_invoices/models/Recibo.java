@@ -16,7 +16,6 @@ public class Recibo {
     private Long id;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "propietario")
-    @NonNull
     private Propietario propietario;
     private LocalDate fecha_emision;
     @NonNull

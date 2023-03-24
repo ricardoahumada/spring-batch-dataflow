@@ -53,7 +53,7 @@ public class PersistenceConfig {
     @Bean
     public JpaVendorAdapter vendorAdapter() {
         HibernateJpaVendorAdapter va = new HibernateJpaVendorAdapter();
-        va.setShowSql(true);
+        va.setShowSql(false);
         va.setGenerateDdl(true);
 
         return va;

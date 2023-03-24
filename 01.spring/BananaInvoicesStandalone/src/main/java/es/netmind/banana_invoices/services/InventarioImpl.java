@@ -1,13 +1,17 @@
 package es.netmind.banana_invoices.services;
 
+import es.netmind.banana_invoices.exceptions.NullElementException;
 import es.netmind.banana_invoices.models.Propietario;
 import es.netmind.banana_invoices.models.Recibo;
 import es.netmind.banana_invoices.persistence.IPropietarioRepo;
 import es.netmind.banana_invoices.persistence.IReciboRepo;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.cache.support.NullValue;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class InventarioImpl implements IInventario {
     @Getter
@@ -24,6 +28,7 @@ public class InventarioImpl implements IInventario {
     }
 
     @Override
+    @Transactional
     public Propietario savePropietario(Propietario prop) {
         return propietariosRepo.save(prop);
     }
@@ -34,28 +39,34 @@ public class InventarioImpl implements IInventario {
     }
 
     @Override
+    @Transactional
     public Recibo saveRecibo(Recibo rec) {
         return recibosRepo.save(rec);
     }
 
     @Override
-    public Recibo asocia(Recibo rec, Propietario prop) {
-        rec.setPropietario(prop);
-        recibosRepo.save(rec);
-        return rec;
+    @Transactional
+    public Recibo asocia(Long recId, Long propId) throws NullElementException {
+        Recibo rec = recibosRepo.findById(recId);
+        Propietario prop = propietariosRepo.findById(propId);
+        if (rec != null && prop != null) {
+            rec.setPropietario(prop);
+            recibosRepo.save(rec);
+            return rec;
+        } else throw new NullElementException("Recibo o propietario nulos");
     }
 
     @Override
-    public boolean esValidoRecibo(Long id) {
+    public boolean esValidoRecibo(Long id)throws NullElementException {
         Recibo rec = recibosRepo.findById(id);
         if (rec != null) return rec.esValido();
-        else return false;
+        else throw new NullElementException("Recibo nulo");
     }
 
     @Override
     public boolean estaPagadoRecibo(Long id) {
         Recibo rec = recibosRepo.findById(id);
         if (rec != null) return rec.isEstado();
-        else return false;
+        else throw new NullElementException("Recibo nulo");
     }
 }

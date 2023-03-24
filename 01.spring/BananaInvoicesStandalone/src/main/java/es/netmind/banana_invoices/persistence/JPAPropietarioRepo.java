@@ -24,4 +24,10 @@ public class JPAPropietarioRepo implements IPropietarioRepo {
         em.persist(prop);
         return prop;
     }
+
+    @Override
+    @Transactional
+    public Propietario findById(Long id) {
+        return em.find(Propietario.class, id);
+    }
 }
