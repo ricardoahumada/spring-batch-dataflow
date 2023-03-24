@@ -12,6 +12,7 @@ import org.springframework.cache.support.NullValue;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 public class InventarioImpl implements IInventario {
     @Getter
@@ -57,7 +58,7 @@ public class InventarioImpl implements IInventario {
     }
 
     @Override
-    public boolean esValidoRecibo(Long id)throws NullElementException {
+    public Set<String> esValidoRecibo(Long id)throws NullElementException {
         Recibo rec = recibosRepo.findById(id);
         if (rec != null) return rec.esValido();
         else throw new NullElementException("Recibo nulo");
