@@ -4,9 +4,14 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
-@Getter @Setter
-@NoArgsConstructor @RequiredArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
 @ToString
 @Entity
 @Table(name = "recibo")
@@ -40,7 +45,22 @@ public class Recibo {
     @NonNull
     private boolean valido;
 
-    public boolean esValido(){
-        return false;
+    public double calcular_total() {
+        return base_imponible + base_imponible * impuestos;
+    }
+
+    public Set<String> esValido() {
+        Set errores = new HashSet();
+
+        if (!(propietario != null && propietario.getPid() > 0)) errores.add("propietario:" + propietario);
+        if (fecha_vencimiento == null) errores.add("fecha_vencimiento:"+fecha_vencimiento);
+        if (!(nombre_producto != null && !nombre_producto.trim().equals(""))) errores.add("nombre_producto:"+nombre_producto);
+        if (cantidad <= 0) errores.add("cantidad:"+cantidad);
+        if (precio_unitario <= 0) errores.add("precio_unitario:"+precio_unitario);
+        if (base_imponible <= 0 || (base_imponible != cantidad * precio_unitario)) errores.add("base_imponible:"+base_imponible);
+        if (impuestos < 0) errores.add("impuestos:"+impuestos);
+        if (total != calcular_total()) errores.add("total:"+total);
+
+        return errores;
     }
 }

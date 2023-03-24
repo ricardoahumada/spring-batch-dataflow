@@ -11,6 +11,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.Enumeration;
+import java.util.Set;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -75,7 +76,13 @@ public class GestorRecibos {
     }
 
     private static boolean recibo_es_valido(Long idrec) {
-        return inventario.esValidoRecibo(idrec);
+        Set<String> errores = inventario.esValidoRecibo(idrec);
+        if (errores.size() == 0) return true;
+        else {
+            System.out.println("⚠ Errores en recibo " + idrec + ":");
+            for (String err : errores) System.out.println("\t"+err);
+            return false;
+        }
     }
 
     private static boolean recibo_esta_pagado(Long idrec) {
