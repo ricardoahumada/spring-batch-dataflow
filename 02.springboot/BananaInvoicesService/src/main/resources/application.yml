@@ -60,6 +60,9 @@ spring:
       ddl-auto: none
       generate-ddl: false
 
+spring.security.oauth2.resourceserver.jwt.issuer-uri: https://auth-server:9443
+
+
 server:
   port: 8443
   ssl:
@@ -69,4 +72,4 @@ server:
     keyAlias: tomcat
 security.require-ssl: true
 
-
+security.oauth: true # If true OAuth security is activated, else JWT

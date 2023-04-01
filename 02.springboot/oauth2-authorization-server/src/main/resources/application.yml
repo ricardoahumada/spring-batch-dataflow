@@ -1,0 +1,15 @@
+server:
+  port: 9443
+  ssl:
+    key-store: keystore.p12
+    key-store-password: pa55wrd
+    keyStoreType: PKCS12
+    keyAlias: tomcat
+security.require-ssl: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO

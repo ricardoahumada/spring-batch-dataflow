@@ -6,6 +6,7 @@ import es.netmind.banana_invoices.persistence.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -28,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @Profile("prod")
+@ConditionalOnProperty(name = "security.oauth", havingValue = "false")
 public class ApplicationSecurity {
     private static final Logger logger = LoggerFactory.getLogger(ApplicationSecurity.class);
 

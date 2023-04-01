@@ -5,6 +5,7 @@ import es.netmind.banana_invoices.models.User;
 import es.netmind.banana_invoices.security.AuthRequest;
 import es.netmind.banana_invoices.security.AuthResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 
 
 @RestController
+@ConditionalOnProperty(name = "security.oauth", havingValue = "false")
 public class AuthService {
     @Autowired
     AuthenticationManager authManager;
