@@ -93,8 +93,8 @@ public class ApplicationSecurity {
                 ).permitAll() // HABILITAR ESPACIOS LIBRES
 //                .antMatchers("/**").permitAll() // BARRA LIBRE
 //                .antMatchers("/products/**").hasAuthority(ERole.USER.name())
-                .antMatchers(HttpMethod.GET, "/recibos/**").hasAnyAuthority(ERole.USER.name()) //Para acceder a recibos debe ser USER
-                .antMatchers("/recibos/**").hasAnyAuthority(ERole.ADMIN.name()) //admin puede hacer de todo
+                .antMatchers(HttpMethod.GET, "/**/**").hasAnyAuthority(ERole.USER.name(),ERole.ADMIN.name()) //Para acceder a recibos debe ser USER
+                .antMatchers("/**/**").hasAnyAuthority(ERole.ADMIN.name()) //admin puede hacer de todo
                 .anyRequest().authenticated();
 
         http.headers().frameOptions().sameOrigin();
