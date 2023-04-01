@@ -45,6 +45,17 @@ public class Recibo {
     @NonNull
     private boolean valido;
 
+    public Recibo(Long id, @NonNull LocalDate fecha_vencimiento, @NonNull String nombre_producto, @NonNull int cantidad, @NonNull float precio_unitario, @NonNull double base_imponible, @NonNull float impuestos, @NonNull double total) {
+        this.id = id;
+        this.fecha_vencimiento = fecha_vencimiento;
+        this.nombre_producto = nombre_producto;
+        this.cantidad = cantidad;
+        this.precio_unitario = precio_unitario;
+        this.base_imponible = base_imponible;
+        this.impuestos = impuestos;
+        this.total = total;
+    }
+
     public double calcular_total() {
         return base_imponible + base_imponible * impuestos;
     }
