@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: BananaInvoicesService
+
+---
+spring:
+  sql.init.mode: always
+  config.activate.on-profile: dev
+  devtools.restart.enabled: true
+  application:
+    name: BananaInvoicesService
+  datasource:
+    url: "jdbc:h2:file:./invoicesdb"
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  batch.jdbc.initialize-schema: always
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+      generate-ddl: true
+    defer-datasource-initialization: true
+  h2:
+    console.enabled: true
+    console.path: /h2-ui
+
+cloud.aws:
+  region.static: us-west-2
+  stack.auto: false
+  credentials.instance-profile: false
+
+inputData.fileExtension: csv
+rawdata:
+  s3bucket: rayfocus-blogs.code-samples
+  s3object.prefix: spring-batch/input/
+  s3path: s3://rayfocus-blogs.code-samples/spring-batch/input
+
+batch.chunk.size: 100
+batch.threadPool.size: 20
+
+---
+spring:
+  profiles: prod
+  application:
+    name: BananaInvoicesService
+  datasource:
+    url: "jdbc:mysql://localhost/invoices?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false"
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: invoices_user
+    password: inv123
+  batch.jdbc.initialize-schema: always
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+      generate-ddl: false
