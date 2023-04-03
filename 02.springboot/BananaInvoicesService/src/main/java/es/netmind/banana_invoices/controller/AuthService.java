@@ -4,6 +4,9 @@ import es.netmind.banana_invoices.jwt.JwtTokenUtil;
 import es.netmind.banana_invoices.models.User;
 import es.netmind.banana_invoices.security.AuthRequest;
 import es.netmind.banana_invoices.security.AuthResponse;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
@@ -27,6 +30,11 @@ public class AuthService {
     @Autowired
     JwtTokenUtil jwtUtil;
 
+    @ApiOperation(value = "Authenticate for token", notes = "Returns a product as per the id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
+            @ApiResponse(code = 401, message = "Bad credentials")
+    })
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
         try {

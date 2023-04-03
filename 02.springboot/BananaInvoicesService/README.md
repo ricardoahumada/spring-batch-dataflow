@@ -1,6 +1,6 @@
 # Testing
 ### A. For testing endpoint WITHOUT security
-1. Launch server with "dev" profile
+1. Launch server with "dev" profile (uses H2 database)
 - `mvn clean spring-boot:run -Dspring-boot.run.profiles=dev`
 - or, add VM option: "-Dspring.profiles.active=dev"
 
@@ -9,7 +9,7 @@
 - All endpoints are open.
 
 ### B. For testing endpoint WITH security: JWT
-1. Launch server with "prod" profile
+1. Launch server with "prod" profile (uses Mysql database)
 - `mvn clean spring-boot:run -Dspring-boot.run.profiles=prod`
 - or, add VM option: "-Dspring.profiles.active=prod"
 - In application.yml:
@@ -50,7 +50,7 @@
 		* Custom Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxLG5hbUBjb2RlamF2YS5...`
 
 ### C. For testing endpoint WITH security: OAUTH
-1. Launch server with "prod" profile
+1. Launch server with "prod" profile  (uses Mysql database)
 - `mvn clean spring-boot:run -Dspring-boot.run.profiles=prod`
 - or, add VM option: "-Dspring.profiles.active=prod"
 - In application.yml:
