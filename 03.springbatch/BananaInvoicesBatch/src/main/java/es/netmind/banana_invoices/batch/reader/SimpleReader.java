@@ -1,4 +1,4 @@
-package es.netmind.banana_invoices.batch;
+package es.netmind.banana_invoices.batch.reader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

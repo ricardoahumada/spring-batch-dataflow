@@ -8,9 +8,9 @@
 
 package es.netmind.banana_invoices.batch.config;
 
-import es.netmind.banana_invoices.batch.SimpleProcessor;
-import es.netmind.banana_invoices.batch.SimpleReader;
-import es.netmind.banana_invoices.batch.SimpleWriter;
+import es.netmind.banana_invoices.batch.processor.SimpleProcessor;
+import es.netmind.banana_invoices.batch.reader.SimpleReader;
+import es.netmind.banana_invoices.batch.writer.SimpleWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -27,7 +27,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableBatchProcessing
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class AppMainConfig {
-
     @Autowired
     private JobBuilderFactory jobs;
 
