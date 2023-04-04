@@ -31,4 +31,8 @@ public class Propietario {
     @OneToMany(mappedBy = "propietario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Recibo> recibos;
+
+    public Propietario(long pid) {
+        this.pid=pid;
+    }
 }

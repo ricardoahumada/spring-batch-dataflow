@@ -2,6 +2,7 @@ package es.netmind.banana_invoices.batch.processor;
 
 import es.netmind.banana_invoices.models.PaidStatus;
 import es.netmind.banana_invoices.models.Recibo;
+import es.netmind.banana_invoices.models.ReciboInvalido;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
@@ -9,9 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class ReciboPagadoProcessor implements ItemProcessor<Recibo, Recibo> {
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -23,8 +21,9 @@ public class ReciboPagadoProcessor implements ItemProcessor<Recibo, Recibo> {
 
     @Override
     public Recibo process(Recibo recibo) throws Exception {
-        fetchVerificationDataFromAPI(12L);
-        return null;
+        fetchVerificationDataFromAPI(recibo.getId());
+        // HERE PROCESS RECIBO
+        return recibo;
     }
 
     private PaidStatus fetchVerificationDataFromAPI(Long id) throws NoSuchFieldException {

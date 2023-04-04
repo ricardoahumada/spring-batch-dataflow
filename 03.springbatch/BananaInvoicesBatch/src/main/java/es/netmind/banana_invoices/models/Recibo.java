@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,9 +14,10 @@ import java.util.Set;
 @ToString
 @Entity
 @Table(name = "recibo")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Recibo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "propietario")
@@ -56,6 +56,24 @@ public class Recibo {
         this.total = total;
     }
 
+    public Recibo(Recibo recibo) {
+        this.id = recibo.id;
+        this.propietario = recibo.propietario;
+        this.fecha_emision = recibo.fecha_emision;
+        this.fecha_vencimiento = recibo.fecha_vencimiento;
+        this.nombre_contacto = recibo.nombre_contacto;
+        this.direccion_contacto = recibo.direccion_contacto;
+        this.direccion_envio = recibo.direccion_envio;
+        this.nombre_producto = recibo.nombre_producto;
+        this.cantidad = recibo.cantidad;
+        this.precio_unitario = recibo.precio_unitario;
+        this.base_imponible = recibo.base_imponible;
+        this.impuestos = recibo.impuestos;
+        this.total = recibo.total;
+        this.estado = recibo.estado;
+        this.valido = recibo.valido;
+    }
+
     public double calcular_total() {
         return base_imponible + base_imponible * impuestos;
     }
@@ -64,13 +82,15 @@ public class Recibo {
         Set errores = new HashSet();
 
         if (!(propietario != null && propietario.getPid() > 0)) errores.add("propietario:" + propietario);
-        if (fecha_vencimiento == null) errores.add("fecha_vencimiento:"+fecha_vencimiento);
-        if (!(nombre_producto != null && !nombre_producto.trim().equals(""))) errores.add("nombre_producto:"+nombre_producto);
-        if (cantidad <= 0) errores.add("cantidad:"+cantidad);
-        if (precio_unitario <= 0) errores.add("precio_unitario:"+precio_unitario);
-        if (base_imponible <= 0 || (base_imponible != cantidad * precio_unitario)) errores.add("base_imponible:"+base_imponible);
-        if (impuestos < 0) errores.add("impuestos:"+impuestos);
-        if (total != calcular_total()) errores.add("total:"+total);
+        if (fecha_vencimiento == null) errores.add("fecha_vencimiento:" + fecha_vencimiento);
+        if (!(nombre_producto != null && !nombre_producto.trim().equals("")))
+            errores.add("nombre_producto:" + nombre_producto);
+        if (cantidad <= 0) errores.add("cantidad:" + cantidad);
+        if (precio_unitario <= 0) errores.add("precio_unitario:" + precio_unitario);
+        if (base_imponible <= 0 || (base_imponible != cantidad * precio_unitario))
+            errores.add("base_imponible:" + base_imponible);
+        if (impuestos < 0) errores.add("impuestos:" + impuestos);
+        if (total != calcular_total()) errores.add("total:" + total);
 
         return errores;
     }

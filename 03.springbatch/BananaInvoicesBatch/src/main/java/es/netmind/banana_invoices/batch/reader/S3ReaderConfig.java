@@ -55,25 +55,22 @@ public class S3ReaderConfig {
                 .withBucketName(rawDataS3Bucket)
                 .withPrefix(rawDataS3ObjectPrefix);
 
-        logger.info("***listObjectsRequest::" + listObjectsRequest.getBucketName() + "::" + listObjectsRequest.getPrefix());
+        logger.info("listObjectsRequest::" + listObjectsRequest.getBucketName() + "::" + listObjectsRequest.getPrefix());
 
         ObjectListing sourceObjectsListing;
         do {
             sourceObjectsListing = amazonS3Client.listObjects(listObjectsRequest);
-            logger.info("***sourceObjectsListing::" + sourceObjectsListing.getObjectSummaries() + "::" + sourceObjectsListing.isTruncated());
+            logger.info("sourceObjectsListing::" + sourceObjectsListing.getObjectSummaries() + "::" + sourceObjectsListing.isTruncated());
 
             for (S3ObjectSummary sourceFile : sourceObjectsListing.getObjectSummaries()) {
-                logger.info("***sourceFile::" + sourceFile.toString());
 
-                if (!(sourceFile.getSize() > 0)
-                        || (!sourceFile.getKey().endsWith(DOT.concat(inputDataFileExtension)))
-                ) {
+                if (!(sourceFile.getSize() > 0) || (!sourceFile.getKey().endsWith(DOT.concat(inputDataFileExtension)))) {
                     // Skip if file is empty (or) file extension is not "csv"
                     continue;
                 }
-                logger.info("Reading " + sourceFile.getKey());
-                resourceList.add(resourceLoader.getResource(S3_PROTOCOL_PREFIX.concat(rawDataS3Bucket).concat(FORWARD_SLASH)
-                        .concat(sourceFile.getKey())));
+
+                logger.info("Reading file::" + sourceFile.getKey());
+                resourceList.add(resourceLoader.getResource(S3_PROTOCOL_PREFIX.concat(rawDataS3Bucket).concat(FORWARD_SLASH).concat(sourceFile.getKey())));
             }
             listObjectsRequest.setMarker(sourceObjectsListing.getNextMarker());
         } while (sourceObjectsListing.isTruncated());
@@ -92,7 +89,8 @@ public class S3ReaderConfig {
     @StepScope
     public FlatFileItemReader<Recibo> reciboFileItemReader() {
         FlatFileItemReader<Recibo> reader = new FlatFileItemReader<>();
-        reader.setLinesToSkip(1);
+
+        reader.setLinesToSkip(0);
         DefaultLineMapper<Recibo> movieDataLineMapper = new DefaultLineMapper();
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
         tokenizer.setNames(new String[]{
@@ -102,6 +100,7 @@ public class S3ReaderConfig {
         movieDataLineMapper.setLineTokenizer(tokenizer);
         reader.setLineMapper(movieDataLineMapper);
         reader.setRecordSeparatorPolicy(new DefaultRecordSeparatorPolicy());
+
         return reader;
     }
 

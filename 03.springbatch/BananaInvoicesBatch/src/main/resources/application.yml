@@ -36,7 +36,7 @@ cloud.aws:
   stack.auto: false
 #  credentials.instance-profile: false
   credentials:
-     access-key: XXXXXXXXXXXXXXXx
+     access-key: XXXX
      secret-key: mqAHdDwp4hSy15f+9mrOvaf8qJ/ccSxKxti0NyzS
 
 # AWS data

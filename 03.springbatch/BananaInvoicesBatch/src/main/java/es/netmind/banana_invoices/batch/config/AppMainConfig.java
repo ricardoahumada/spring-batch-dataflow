@@ -8,6 +8,7 @@
 
 package es.netmind.banana_invoices.batch.config;
 
+import es.netmind.banana_invoices.batch.processor.ReciboPagadoProcessor;
 import es.netmind.banana_invoices.batch.processor.SimpleProcessor;
 import es.netmind.banana_invoices.batch.reader.SimpleReader;
 import es.netmind.banana_invoices.batch.writer.SimpleWriter;
@@ -85,11 +86,17 @@ public class AppMainConfig {
     }
 
     @Bean
+    public ItemProcessor<Recibo,Recibo> getRecProcessor(){
+        return new ReciboPagadoProcessor();
+    }
+
+    @Bean
     public Step step2() {
         return steps.get("step2")
                 .allowStartIfComplete(true)
                 .<Recibo, Recibo>chunk(20)
                 .reader(s3Reader)
+                .processor(getRecProcessor())
                 .writer(recWriter())
                 .build();
     }
