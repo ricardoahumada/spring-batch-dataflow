@@ -1,10 +1,9 @@
-package es.netmind.banana_invoices.batch.config;
+package es.netmind.banana_invoices.batch.reader;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import es.netmind.banana_invoices.batch.reader.ReciboFieldSetMapper;
 import es.netmind.banana_invoices.models.Recibo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,24 +45,25 @@ public class S3ReaderConfig {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    @Bean @StepScope
+    @Bean
+    @StepScope
     public SynchronizedItemStreamReader<Recibo> s3RecibosDataReader() {
         SynchronizedItemStreamReader synchronizedItemStreamReader = new SynchronizedItemStreamReader();
         List<Resource> resourceList = new ArrayList<>();
-        String sourceBucket = rawDataS3Bucket;
-        String sourceObjectPrefix = rawDataS3ObjectPrefix
-                .concat("RECIBOS")
-                .concat(FORWARD_SLASH);
-        logger.info("sourceObjectPrefix::" + sourceObjectPrefix);
 
         ListObjectsRequest listObjectsRequest = new ListObjectsRequest()
-                .withBucketName(sourceBucket)
-                .withPrefix(sourceObjectPrefix);
-        ObjectListing sourceObjectsListing;
+                .withBucketName(rawDataS3Bucket)
+                .withPrefix(rawDataS3ObjectPrefix);
 
+        logger.info("***listObjectsRequest::" + listObjectsRequest.getBucketName() + "::" + listObjectsRequest.getPrefix());
+
+        ObjectListing sourceObjectsListing;
         do {
             sourceObjectsListing = amazonS3Client.listObjects(listObjectsRequest);
+            logger.info("***sourceObjectsListing::" + sourceObjectsListing.getObjectSummaries() + "::" + sourceObjectsListing.isTruncated());
+
             for (S3ObjectSummary sourceFile : sourceObjectsListing.getObjectSummaries()) {
+                logger.info("***sourceFile::" + sourceFile.toString());
 
                 if (!(sourceFile.getSize() > 0)
                         || (!sourceFile.getKey().endsWith(DOT.concat(inputDataFileExtension)))
@@ -72,7 +72,7 @@ public class S3ReaderConfig {
                     continue;
                 }
                 logger.info("Reading " + sourceFile.getKey());
-                resourceList.add(resourceLoader.getResource(S3_PROTOCOL_PREFIX.concat(sourceBucket).concat(FORWARD_SLASH)
+                resourceList.add(resourceLoader.getResource(S3_PROTOCOL_PREFIX.concat(rawDataS3Bucket).concat(FORWARD_SLASH)
                         .concat(sourceFile.getKey())));
             }
             listObjectsRequest.setMarker(sourceObjectsListing.getNextMarker());
@@ -84,17 +84,19 @@ public class S3ReaderConfig {
         multiResourceItemReader.setResources(resources);
         multiResourceItemReader.setDelegate(reciboFileItemReader());
         synchronizedItemStreamReader.setDelegate(multiResourceItemReader);
+
         return synchronizedItemStreamReader;
     }
 
-    @Bean @StepScope
+    @Bean
+    @StepScope
     public FlatFileItemReader<Recibo> reciboFileItemReader() {
         FlatFileItemReader<Recibo> reader = new FlatFileItemReader<>();
         reader.setLinesToSkip(1);
         DefaultLineMapper<Recibo> movieDataLineMapper = new DefaultLineMapper();
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
         tokenizer.setNames(new String[]{
-                "name", "genre", "releaseYear", "releasePlatform"
+                "id", "direccion_contacto", "direccion_envio", "fecha_emision", "fecha_vencimiento", "nombre_contacto", "propietario", "nombre_producto", "cantidad", "precio_unitario", "base_imponible", "impuestos", "total"
         });
         movieDataLineMapper.setFieldSetMapper(reciboFieldSetMapper());
         movieDataLineMapper.setLineTokenizer(tokenizer);

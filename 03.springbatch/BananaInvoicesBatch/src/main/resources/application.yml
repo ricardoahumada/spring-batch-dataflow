@@ -30,18 +30,21 @@ spring:
 cloud.aws:
   region:
     auto: false
-    static: eu-west-2
+    static: us-east-1
     use-default-aws-region-chain: true
   stack: false
   stack.auto: false
-  credentials.instance-profile: false
+#  credentials.instance-profile: false
+  credentials:
+     access-key: XXXXXXXXXXXXXXXx
+     secret-key: mqAHdDwp4hSy15f+9mrOvaf8qJ/ccSxKxti0NyzS
 
 # AWS data
 inputData.fileExtension: csv
 rawdata:
-  s3bucket: rayfocus-blogs.code-samples
-  s3object.prefix: spring-batch/input/
-  s3path: s3://rayfocus-blogs.code-samples/spring-batch/input
+  s3bucket: invoices.samples
+  s3object.prefix: toprocess
+  s3path: s3://invoices.samples/toprocess
 
 # batch config
 batch.chunk.size: 100

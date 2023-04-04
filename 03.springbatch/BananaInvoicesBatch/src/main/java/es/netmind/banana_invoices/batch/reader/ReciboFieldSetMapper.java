@@ -13,7 +13,7 @@ public class ReciboFieldSetMapper implements FieldSetMapper<Recibo> {
     @Override
     public Recibo mapFieldSet(FieldSet fieldSet) throws BindException {
         Recibo rec = new Recibo();
-        ///rec.setName(fieldSet.readString("name"));
+        //rec.setName(fieldSet.readString("name"));
         return rec;
     }
 }
