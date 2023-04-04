@@ -21,8 +21,10 @@ public class ReciboPagadoProcessor implements ItemProcessor<Recibo, Recibo> {
 
     @Override
     public Recibo process(Recibo recibo) throws Exception {
-        fetchVerificationDataFromAPI(recibo.getId());
-        // HERE PROCESS RECIBO
+        // TODO: HERE GET PAID STATUS AND PROCESS RECIBO
+        PaidStatus paid_status = fetchVerificationDataFromAPI(recibo.getId());
+        recibo.setEstado(paid_status.getPaid());
+
         return recibo;
     }
 

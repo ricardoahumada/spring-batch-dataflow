@@ -88,13 +88,14 @@ public class S3ReaderConfig {
     @Bean
     @StepScope
     public FlatFileItemReader<Recibo> reciboFileItemReader() {
+        // TODO: HERE IMPEMENT A FLAT ITEM WRITER
         FlatFileItemReader<Recibo> reader = new FlatFileItemReader<>();
 
         reader.setLinesToSkip(0);
         DefaultLineMapper<Recibo> movieDataLineMapper = new DefaultLineMapper();
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
         tokenizer.setNames(new String[]{
-                "id", "direccion_contacto", "direccion_envio", "fecha_emision", "fecha_vencimiento", "nombre_contacto", "propietario", "nombre_producto", "cantidad", "precio_unitario", "base_imponible", "impuestos", "total"
+                "id_remoto", "direccion_contacto", "direccion_envio", "fecha_emision", "fecha_vencimiento", "nombre_contacto", "propietario", "nombre_producto", "cantidad", "precio_unitario", "base_imponible", "impuestos", "total"
         });
         movieDataLineMapper.setFieldSetMapper(reciboFieldSetMapper());
         movieDataLineMapper.setLineTokenizer(tokenizer);

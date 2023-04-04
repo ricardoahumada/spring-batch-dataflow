@@ -28,7 +28,7 @@ public class Propietario {
     @NonNull
     private int seccion;
 
-    @OneToMany(mappedBy = "propietario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "propietario", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Recibo> recibos;
 

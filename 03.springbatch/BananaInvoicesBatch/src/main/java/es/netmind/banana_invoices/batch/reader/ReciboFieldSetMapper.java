@@ -17,7 +17,6 @@ public class ReciboFieldSetMapper implements FieldSetMapper<Recibo> {
     public Recibo mapFieldSet(FieldSet fieldSet) throws BindException {
         Recibo rec = new Recibo();
 
-        rec.setId(fieldSet.readLong("id"));
         if (isValidField(fieldSet, "direccion_contacto")) rec.setDireccion_contacto(fieldSet.readString("direccion_contacto"));
         if (isValidField(fieldSet, "direccion_envio")) rec.setDireccion_envio(fieldSet.readString("direccion_envio"));
         if (isValidField(fieldSet, "fecha_emision")) rec.setFecha_emision(convertToLocalDate(fieldSet.readDate("fecha_emision")));

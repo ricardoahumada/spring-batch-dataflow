@@ -19,7 +19,7 @@ public class Recibo {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "propietario")
     private Propietario propietario;
     private LocalDate fecha_emision;
@@ -75,7 +75,11 @@ public class Recibo {
     }
 
     public double calcular_total() {
-        return base_imponible + base_imponible * impuestos;
+        return Math.round((base_imponible + (base_imponible * impuestos / 100)) * 100.0) / 100.0;
+    }
+
+    public double calcular_base_imponible() {
+        return Math.round(cantidad * precio_unitario * 100.0) / 100.0;
     }
 
     public Set<String> esValido() {
@@ -87,10 +91,10 @@ public class Recibo {
             errores.add("nombre_producto:" + nombre_producto);
         if (cantidad <= 0) errores.add("cantidad:" + cantidad);
         if (precio_unitario <= 0) errores.add("precio_unitario:" + precio_unitario);
-        if (base_imponible <= 0 || (base_imponible != cantidad * precio_unitario))
-            errores.add("base_imponible:" + base_imponible);
+        if (base_imponible <= 0 || (base_imponible != calcular_base_imponible()))
+            errores.add("base_imponible:" + base_imponible + "<>" + calcular_base_imponible());
         if (impuestos < 0) errores.add("impuestos:" + impuestos);
-        if (total != calcular_total()) errores.add("total:" + total);
+        if (total != calcular_total()) errores.add("total:" + total + "<>" + calcular_total());
 
         return errores;
     }

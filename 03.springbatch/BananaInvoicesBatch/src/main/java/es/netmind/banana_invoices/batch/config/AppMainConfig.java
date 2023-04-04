@@ -9,10 +9,15 @@
 package es.netmind.banana_invoices.batch.config;
 
 import es.netmind.banana_invoices.batch.processor.ReciboPagadoProcessor;
+import es.netmind.banana_invoices.batch.processor.ReciboValidoProcessor;
 import es.netmind.banana_invoices.batch.processor.SimpleProcessor;
 import es.netmind.banana_invoices.batch.reader.SimpleReader;
+import es.netmind.banana_invoices.batch.writer.ReciboJPAWriter;
+import es.netmind.banana_invoices.batch.writer.ReciboSimpleWriter;
 import es.netmind.banana_invoices.batch.writer.SimpleWriter;
 import es.netmind.banana_invoices.models.Recibo;
+import es.netmind.banana_invoices.persistence.IReciboRepo;
+import es.netmind.banana_invoices.persistence.ReciboInvalidoRepository;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -23,11 +28,10 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.support.SynchronizedItemStreamReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
 
 @Configuration
 @EnableBatchProcessing
@@ -68,36 +72,49 @@ public class AppMainConfig {
                 .build();
     }
 
+    /* RECIBOS */
     @Autowired
     public SynchronizedItemStreamReader<Recibo> s3Reader;
 
+    @Autowired
+    private IReciboRepo reciboRepo;
+    @Autowired
+    private ReciboInvalidoRepository invalidoRepository;
+
     @Bean
-    public ItemWriter<Recibo> recWriter() {
-        class RecWriter implements ItemWriter<Recibo> {
-
-            @Override
-            public void write(List<? extends Recibo> list) throws Exception {
-                System.out.println("RecWriter write()....:" + list.size());
-                for (Recibo item : list) System.out.printf("\t ...writing: %s\n", item);
-            }
-        }
-
-        return new RecWriter();
+    public ItemWriter<Object> jpaWriter() {
+        ReciboJPAWriter jpaWriter = new ReciboJPAWriter();
+        jpaWriter.setReciboRepo(reciboRepo);
+        jpaWriter.setInvalidoRepository(invalidoRepository);
+        return jpaWriter;
     }
 
     @Bean
-    public ItemProcessor<Recibo,Recibo> getRecProcessor(){
+    public ItemWriter<Object> recWriter() {
+        return new ReciboSimpleWriter();
+    }
+
+    @Bean
+    public ItemProcessor<Recibo, Recibo> getRecPagadoProcessor() {
         return new ReciboPagadoProcessor();
     }
+
+    @Bean
+    public ItemProcessor<Recibo, Object> getRecValidoProcessor() {
+        return new ReciboValidoProcessor();
+    }
+
 
     @Bean
     public Step step2() {
         return steps.get("step2")
                 .allowStartIfComplete(true)
-                .<Recibo, Recibo>chunk(20)
+                .<Recibo, Object>chunk(20)
                 .reader(s3Reader)
-                .processor(getRecProcessor())
-                .writer(recWriter())
+//                .processor(getRecProcessor())
+                .processor(getRecValidoProcessor())
+//                .writer(recWriter())
+                .writer(jpaWriter())
                 .build();
     }
 
