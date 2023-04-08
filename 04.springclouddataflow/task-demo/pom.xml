@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>es.netmind</groupId>
 	<artifactId>task-demo</artifactId>
-	<version>0.0.5-SNAPSHOT</version>
+	<version>0.0.6-SNAPSHOT</version>
 	<name>task-demo</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -43,10 +43,6 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.mariadb.jdbc</groupId>
-			<artifactId>mariadb-java-client</artifactId>
 		</dependency>
 	</dependencies>
 
