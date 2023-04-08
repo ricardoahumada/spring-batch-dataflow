@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>es.netmind</groupId>
 	<artifactId>task-demo</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>task-demo</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
