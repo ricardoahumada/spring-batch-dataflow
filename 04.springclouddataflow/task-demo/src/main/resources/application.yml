@@ -1,0 +1,3 @@
+
+spring.application.name: Demo Task
+logging.level.org.springframework.cloud.task: DEBUG
