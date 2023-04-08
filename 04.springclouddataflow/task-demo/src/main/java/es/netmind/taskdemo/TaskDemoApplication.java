@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.task.configuration.EnableTask;
 import org.springframework.context.annotation.Bean;
 
@@ -15,6 +16,7 @@ import java.util.Date;
 
 @EnableTask
 @SpringBootApplication
+@EnableConfigurationProperties(TaskDemoProperties.class)
 public class TaskDemoApplication {
 	private static final Logger logger = LoggerFactory.getLogger(TaskDemoApplication.class);
 

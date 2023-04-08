@@ -5,10 +5,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 @ConfigurationProperties
-@Component
+//@Component
 public class TaskDemoProperties {
+    private String message = "Hello world!!";
     public String getMessage() {
-        return "Hello world!!";
+        return message;
+    }
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }
