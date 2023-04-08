@@ -23,22 +23,21 @@ public class TaskDemoApplication {
 	}
 
     @Bean
-	public TimestampTask timeStampTask() {
-		return new TimestampTask();
+	public TaskDemo timeStampTask() {
+		return new TaskDemo();
 	}
 
 	/**
 	 * A commandline runner that prints a timestamp.
 	 */
-	public static class TimestampTask implements CommandLineRunner {
+	public static class TaskDemo implements CommandLineRunner {
 
 		@Autowired
-		private TimestampTaskProperties config;
+		private TaskDemoProperties config;
 
 		@Override
 		public void run(String... strings) {
-			DateFormat dateFormat = new SimpleDateFormat(this.config.getFormat());
-			logger.info(dateFormat.format(new Date()));
+			logger.info("This is the message: {}",this.config.getMessage());
 		}
 
 	}

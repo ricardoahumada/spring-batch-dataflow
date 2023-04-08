@@ -18,16 +18,16 @@ class TaskDemoApplicationTests {
 
     @Test
     public void testTimeStampApp(CapturedOutput capturedOutput) throws Exception {
-        final String TEST_DATE_DOTS = ".......";
+        final String TEST_DOTS = ".......";
         final String CREATE_TASK_MESSAGE = "Creating: TaskExecution{executionId=";
         final String UPDATE_TASK_MESSAGE = "Updating: TaskExecution with executionId=";
         final String EXIT_CODE_MESSAGE = "with the following {exitCode=0";
-        String[] args = {"--format=yyyy" + TEST_DATE_DOTS};
+        String[] args = {};
 
         SpringApplication.run(TaskDemoApplication.class, args);
 
         String output = capturedOutput.toString();
-        assertThat(output.contains(TEST_DATE_DOTS)).as("Unable to find the timestamp: " + output).isTrue();
+        assertThat(output.contains(TEST_DOTS)).as("Unable to find the timestamp: " + output).isTrue();
         assertThat(output.contains(CREATE_TASK_MESSAGE)).as("Test results do not show create task message: " + output)
                 .isTrue();
         assertThat(output.contains(UPDATE_TASK_MESSAGE)).as("Test results do not show success message: " + output)
