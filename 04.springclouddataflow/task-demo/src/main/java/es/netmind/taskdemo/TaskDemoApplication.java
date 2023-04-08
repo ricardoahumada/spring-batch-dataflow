@@ -23,7 +23,7 @@ public class TaskDemoApplication {
 	}
 
     @Bean
-	public TaskDemo timeStampTask() {
+	public TaskDemo demoTask() {
 		return new TaskDemo();
 	}
 
