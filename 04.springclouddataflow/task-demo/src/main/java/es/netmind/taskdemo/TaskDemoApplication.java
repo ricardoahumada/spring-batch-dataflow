@@ -15,8 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @EnableTask
-@SpringBootApplication
 @EnableConfigurationProperties(TaskDemoProperties.class)
+@SpringBootApplication
 public class TaskDemoApplication {
 	private static final Logger logger = LoggerFactory.getLogger(TaskDemoApplication.class);
 
