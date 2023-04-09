@@ -39,7 +39,7 @@ public class JobConfiguration {
 
             @Override
             public String read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-                if (counter < tokens.length - 1) {
+                if (counter < tokens.length) {
                     System.out.println("StringReader: read with property: " + config.getMessage());
                     return tokens[counter++];
                 }
