@@ -18,16 +18,16 @@ public class DemoProcessorApplication {
         SpringApplication.run(DemoProcessorApplication.class, args);
     }
 
-    /*@StreamListener(Processor.INPUT)
+    @StreamListener(Processor.INPUT)
     @SendTo(Processor.OUTPUT)
     public String process(String s) {
         log.info("Processing: ", s);
         return s.toUpperCase();
-    }*/
+    }
 
-    @StreamListener(Processor.INPUT)
+    /*@StreamListener(Processor.INPUT)
     @SendTo(Processor.OUTPUT)
     public Flux<String> receive(Flux<String> stream) {
         return stream.map(text -> "[[" + text + "]]");
-    }
+    }*/
 }
