@@ -1,0 +1,4 @@
+spring.cloud.stream.bindings:
+  input.destination: my-src
+  output.destination: my-proc
+
