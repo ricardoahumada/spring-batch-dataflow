@@ -10,7 +10,7 @@
     </parent>
     <groupId>es.netmind</groupId>
     <artifactId>demo-source</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>demo-source</name>
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -51,6 +51,11 @@
             <scope>test</scope>
             <classifier>test-binder</classifier>
             <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     <dependencyManagement>
