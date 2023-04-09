@@ -47,7 +47,7 @@ public class TaskSinkApplicationTests {
 	@Autowired
 	private StreamBridge streamBridge;
 
-//	@Test
+	@Test
 	public void testLaunch() {
 
 		TaskLauncher testTaskLauncher = this.context.getBean(TaskLauncher.class);
