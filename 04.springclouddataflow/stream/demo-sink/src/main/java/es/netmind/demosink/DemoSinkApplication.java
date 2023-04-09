@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.integration.annotation.Payloads;
 import org.springframework.messaging.Message;
 
 import java.io.FileNotFoundException;
@@ -22,7 +23,7 @@ public class DemoSinkApplication {
 
 
     @StreamListener(Sink.INPUT)
-    void receive(Message<String> message) {
+    void receive(@Payloads String message) {
         log.info("Received message: " + message);
         try (PrintWriter out = new PrintWriter("DemoSinkApplication.txt")) {
             out.println(message);
