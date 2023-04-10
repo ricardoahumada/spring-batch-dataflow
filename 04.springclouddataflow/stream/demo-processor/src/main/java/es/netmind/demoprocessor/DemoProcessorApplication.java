@@ -20,8 +20,8 @@ public class DemoProcessorApplication {
 
     @StreamListener(Processor.INPUT)
     @SendTo(Processor.OUTPUT)
-    public String process(String s) {
-        log.info("Processing: ", s);
+    public String process(String text) {
+        log.info("Processing: "+ text);
         return s.toUpperCase();
     }
 
