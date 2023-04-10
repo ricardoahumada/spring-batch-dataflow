@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 public class ReciboPagadoProcessor implements ItemProcessor<Recibo, Recibo> {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    //TODO: HERE INJECT PROPERTY api.verification.url
     @Value("${api.verification.url}")
     private String apiUrl;
     @Autowired

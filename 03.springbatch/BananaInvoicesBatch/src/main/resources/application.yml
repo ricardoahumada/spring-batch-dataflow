@@ -15,13 +15,6 @@ cloud.aws:
     access-key: XXXX
     secret-key: mqAHdDwp4hSy15f+9mrOvaf8qJ/ccSxKxti0NyzS
 
-# AWS data
-inputData.fileExtension: csv
-rawdata:
-  s3bucket: invoices.samples
-  s3object.prefix: toprocess
-  s3path: s3://invoices.samples/toprocess
-
 # Logging
 logging:
   level:
@@ -59,6 +52,13 @@ batch.threadPool.size: 20
 
 api.verification.url: "http://localhost:9100/api/v1/invoices/"
 
+# AWS data
+inputData.fileExtension: csv
+rawdata:
+  s3bucket: invoices.samples
+  s3object.prefix: toprocess/dev
+  s3path: s3://invoices.samples/toprocess/dev
+
 ---
 spring:
   config.activate.on-profile: prod
@@ -84,3 +84,10 @@ batch.chunk.size: 100
 batch.threadPool.size: 20
 
 api.verification.url: "http://localhost:9100/api/v1/invoices/"
+
+# AWS data
+inputData.fileExtension: csv
+rawdata:
+  s3bucket: invoices.samples
+  s3object.prefix: toprocess/prod
+  s3path: s3://invoices.samples/toprocess/prod
