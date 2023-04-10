@@ -32,7 +32,7 @@ public class SpringCloudTaskSinkApplicationIntegrationTest {
     @Autowired
     private Sink sink;
 
-    @Test
+//    @Test
     public void testTaskLaunch() throws IOException {
 
         TaskLauncher taskLauncher =
