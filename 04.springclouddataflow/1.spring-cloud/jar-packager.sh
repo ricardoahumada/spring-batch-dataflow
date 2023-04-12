@@ -25,7 +25,12 @@ cd ./orders-service
 mvn clean package
 cd ..
 
-echo "Packaging oauth2..."
-cd ./oauth2
+echo "Packaging oauth2-authorization-server..."
+cd ./oauth2/oauth2-authorization-server
 mvn clean package
-cd ..
+cd ../..
+
+echo "Packaging oauth2-api-client..."
+cd ./oauth2/oauth2-api-client
+mvn clean package
+cd ../..
