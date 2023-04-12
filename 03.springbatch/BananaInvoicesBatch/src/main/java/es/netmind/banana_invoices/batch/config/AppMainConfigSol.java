@@ -80,7 +80,7 @@ public class AppMainConfigSol {
                 .allowStartIfComplete(true)
                 .<Recibo, Object>chunk(20)
                 .reader(s3Reader)
-                .processor(getRecValidoProcessor())
+                .processor(getRecPagadoProcessor())
                 .writer(jpaWriter())
                 .build();
     }

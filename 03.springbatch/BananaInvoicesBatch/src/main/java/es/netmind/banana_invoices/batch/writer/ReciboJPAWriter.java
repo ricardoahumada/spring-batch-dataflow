@@ -27,7 +27,7 @@ public class ReciboJPAWriter implements ItemWriter<Object> {
             currentRecibo = (Recibo) item;
             currentRecibo.setId(null);
             if (!currentRecibo.isValido()) {
-                currentReciboInv = (ReciboInvalido) item;
+                currentReciboInv = new ReciboInvalido(currentRecibo,"");
                 System.out.printf("\t ...writing INVALIDO: %s\n", currentReciboInv);
                 invalidoRepository.save(currentReciboInv);
             } else {
