@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  config-server:
+    image: ricardoahumada/config-server:0.0.1-SNAPSHOT
+    build: config-server/
+    container_name: config-server
+    environment:
+      - eureka.client.service-url.defaultZone=http://naming-server:8761/eureka    
+    ports:
+      - 8888:8888
+    networks:
+      - spring-cloud-network
+  naming-server:
+    image: ricardoahumada/naming-server:0.0.1-SNAPSHOT
+    build: naming-server/
+    container_name: naming-server
+    depends_on:
+      - config-server
+    environment:
+      - spring.config.import=optional:configserver:http://config-server:8888  
+    ports:
+      - 8761:8761
+    networks:
+      - spring-cloud-network
+
+networks:
+    spring-cloud-network:
+        driver: bridge      

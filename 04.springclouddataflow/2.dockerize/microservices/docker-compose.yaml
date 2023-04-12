@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  naming-server:
+    image: ricardoahumada/naming-server:0.0.1-SNAPSHOT
+    build: naming-server/
+    container_name: naming-server
+    ports:
+      - 8761:8761
+    networks:
+      - spring-cloud-network
+  products-service:
+    build: products-service/
+    image: ricardoahumada/products-service:0.0.1-SNAPSHOT
+    container_name: products-service
+    depends_on:
+      - naming-server
+    environment:
+      - eureka.client.service-url.defaultZone=http://naming-server:8761/eureka   
+    ports:
+      - 9090:9090
+    networks:
+      - spring-cloud-network    
+  orders-service:
+    image: ricardoahumada/orders-service:0.0.1-SNAPSHOT
+    build: orders-service/
+    container_name: orders-service    
+    depends_on:
+      - naming-server
+      - products-service
+    environment:
+      - eureka.client.service-url.defaultZone=http://naming-server:8761/eureka   
+      - spring.config.import=optional:configserver:http://config-server:8888   
+    ports:
+      - 9100:9100
+    networks:
+      - spring-cloud-network
+
+networks:
+    spring-cloud-network:
+        driver: bridge      
