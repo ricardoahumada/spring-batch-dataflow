@@ -24,8 +24,6 @@ class AppMainConfigTest {
     JobLauncher jobLauncher;
 
     @Autowired
-//    @Qualifier("mySimpleJob")
-    @Qualifier("myBatchJob")
     Job job;
 
     @Test

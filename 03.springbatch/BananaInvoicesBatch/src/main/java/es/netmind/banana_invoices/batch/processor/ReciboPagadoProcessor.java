@@ -11,11 +11,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public class ReciboPagadoProcessor implements ItemProcessor<Recibo, Object> {
+public class ReciboPagadoProcessor implements ItemProcessor<Recibo, Recibo> {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //TODO: HERE INJECT PROPERTY api.verification.url
-    @Value("${api.verification.url}")
     private String apiUrl;
     @Autowired
     private RestTemplate restTemplate;
@@ -23,10 +22,7 @@ public class ReciboPagadoProcessor implements ItemProcessor<Recibo, Object> {
     @Override
     public Recibo process(Recibo recibo) throws Exception {
         // TODO: HERE GET PAID STATUS AND PROCESS RECIBO
-        PaidStatus paid_status = fetchVerificationDataFromAPI(recibo.getId());
-        recibo.setEstado(paid_status.getPaid());
-
-        return recibo;
+        return null;
     }
 
     private PaidStatus fetchVerificationDataFromAPI(Long id) throws NoSuchFieldException {
