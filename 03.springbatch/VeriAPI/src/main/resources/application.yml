@@ -1,0 +1,13 @@
+
+spring:
+  application:
+    name: VeriApi
+
+server:
+  servlet.contextPath: /api/v1
+  port: 9100
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
