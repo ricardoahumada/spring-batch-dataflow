@@ -8,6 +8,7 @@
 
 package es.netmind.banana_invoices.batch.config;
 
+import es.netmind.banana_invoices.batch.listener.ReportTasklet;
 import es.netmind.banana_invoices.batch.processor.ReciboPagadoProcessor;
 import es.netmind.banana_invoices.batch.processor.ReciboValidoProcessor;
 import es.netmind.banana_invoices.batch.processor.SimpleProcessor;
@@ -23,14 +24,31 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.explore.JobExplorer;
+import org.springframework.batch.core.partition.support.MultiResourcePartitioner;
+import org.springframework.batch.core.partition.support.Partitioner;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.mapping.PassThroughLineMapper;
+import org.springframework.batch.item.support.CompositeItemProcessor;
 import org.springframework.batch.item.support.SynchronizedItemStreamReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Configuration
 @EnableBatchProcessing
@@ -65,7 +83,7 @@ public class AppMainConfigSol {
     }
 
     @Bean
-    public ItemProcessor<Recibo, Recibo> getRecPagadoProcessor() {
+    public ItemProcessor<Recibo, Object> getRecPagadoProcessor() {
         return new ReciboPagadoProcessor();
     }
 
@@ -74,21 +92,70 @@ public class AppMainConfigSol {
         return new ReciboValidoProcessor();
     }
 
+    //    COMPOSITE PROCESSOR
+    @Bean
+    public ItemProcessor validPagadoProcessor() {
+        List<ItemProcessor<Recibo, Object>> processors = new ArrayList<>();
+        processors.add(getRecValidoProcessor());
+        processors.add(getRecPagadoProcessor());
+
+        CompositeItemProcessor<Recibo, Object> compositeProcessor = new CompositeItemProcessor<>();
+        compositeProcessor.setDelegates(processors);
+
+        return compositeProcessor;
+    }
+
+    //    TASK EXECUTORS
+    @Value("#{${executor : {size: 2, max: 2, queue: 5}}}")
+    private Map<String, Integer> executorMap;
+
+    @Bean
+    public TaskExecutor taskExecutor() {
+        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+        taskExecutor.setCorePoolSize(executorMap.get("size"));
+        taskExecutor.setMaxPoolSize(executorMap.get("max"));
+        taskExecutor.setQueueCapacity(executorMap.get("queue"));
+        return taskExecutor;
+    }
+
+    //    REPORTING
+    @Autowired
+    private JobExplorer jobExplorer;
+
+    @Bean
+    public ReportTasklet reportTasklet() {
+        return new ReportTasklet(jobExplorer);
+    }
+
+    //    STEPS AND JOBS
+    @Value("${chunk.size}")
+    private Integer chunkSize;
+
     @Bean
     public Step step2() {
         return steps.get("step2")
                 .allowStartIfComplete(true)
-                .<Recibo, Object>chunk(20)
+                .<Recibo, Object>chunk(chunkSize)
                 .reader(s3Reader)
-                .processor(getRecPagadoProcessor())
+                .processor(validPagadoProcessor())
                 .writer(jpaWriter())
+                .taskExecutor(taskExecutor())
+                .build();
+    }
+
+    @Bean
+    public Step reportStep() {
+        return steps.get("reportStep")
+                .allowStartIfComplete(true)
+                .tasklet(reportTasklet())
                 .build();
     }
 
     @Bean("myBatchJob")
     public Job procesadorItems() {
-        return jobs.get("job1")
+        return jobs.get("job2")
                 .start(step2())
+                .on("*").to(reportStep()).end()
                 .build();
     }
 

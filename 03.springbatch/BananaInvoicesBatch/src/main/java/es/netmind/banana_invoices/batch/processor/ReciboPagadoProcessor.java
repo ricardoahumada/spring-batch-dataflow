@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public class ReciboPagadoProcessor implements ItemProcessor<Recibo, Recibo> {
+public class ReciboPagadoProcessor implements ItemProcessor<Recibo, Object> {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //TODO: HERE INJECT PROPERTY api.verification.url

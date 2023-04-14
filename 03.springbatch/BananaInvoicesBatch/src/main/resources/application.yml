@@ -12,8 +12,8 @@ cloud.aws:
   stack.auto: false
   #  credentials.instance-profile: false
   credentials:
-    access-key: XXXXX
-    secret-key: YYYYY
+    access-key: XXXX
+    secret-key: YYYY
 
 # Logging
 logging:
@@ -59,12 +59,18 @@ rawdata:
   s3object.prefix: toprocess/dev
   s3path: s3://invoices.samples/toprocess/dev
 
+chunk.size: 20
+executor:
+  size: 5
+  max: 5
+  queue: 8
+
 ---
 spring:
   config.activate.on-profile: prod
   application:
     name: BananaInvoicesService
-#  sql.init.mode: always
+  #  sql.init.mode: always
   datasource:
     url: "jdbc:mysql://localhost/invoices?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false"
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -91,3 +97,9 @@ rawdata:
   s3bucket: invoices.samples
   s3object.prefix: toprocess/prod
   s3path: s3://invoices.samples/toprocess/prod
+
+chunk.size: 100
+executor:
+  size: 20
+  max: 20
+  queue: 50
