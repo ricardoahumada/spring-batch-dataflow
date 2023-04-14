@@ -12,8 +12,8 @@ cloud.aws:
   stack.auto: false
   #  credentials.instance-profile: false
   credentials:
-    access-key: AKIAZRFGKQIDQQYG3JMQ
-    secret-key: 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
+    access-key: XXXX
+    secret-key: YYYY
 
 # Logging
 logging:
