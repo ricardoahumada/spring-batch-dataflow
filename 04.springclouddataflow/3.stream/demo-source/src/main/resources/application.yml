@@ -1,2 +1,5 @@
-spring.cloud.stream.bindings.output.destination: demo-strm
+spring.cloud.stream:
+  bindings.output.destination: demo-strm
+  kafka.binder.brokers: "localhost:9092"
+
 
