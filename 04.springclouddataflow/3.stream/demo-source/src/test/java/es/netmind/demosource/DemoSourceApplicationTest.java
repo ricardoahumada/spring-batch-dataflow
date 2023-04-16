@@ -2,7 +2,7 @@ package es.netmind.demosource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+//import static org.assertj.core.api.Assertions.assertThat;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = DemoSourceApplication.class)
 @AutoConfigureMockMvc
@@ -23,8 +25,20 @@ class DemoSourceApplicationTest {
     @Autowired
     private MockMvc mvc;
 
+    /*@Autowired
+    private InputDestination input;
+
+    @Autowired
+    private OutputDestination output;
+
     @Test
-    void when_send_get_isOk() {
+    void when_send_message_then_received() {
+        input.send(new GenericMessage<>("hello".getBytes()));
+        assertThat(output.receive().getPayload()).isEqualTo("HELLO".getBytes());
+    }*/
+
+    @Test
+    void when_send_get_then_isOk() {
         try {
             // given:
             // when:
@@ -38,7 +52,6 @@ class DemoSourceApplicationTest {
                     .andReturn();
 
             String contentAsString = result.getResponse().getContentAsString();
-//            AuthResponse response = new ObjectMapper().readValue(contentAsString, AuthResponse.class);
 
         } catch (Exception e) {
             fail(e.getMessage());

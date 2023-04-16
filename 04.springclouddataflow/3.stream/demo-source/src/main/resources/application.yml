@@ -1,5 +1,4 @@
 spring.cloud.stream:
-  bindings.output.destination: demo-strm
+  bindings.output.destination: demo-strm # old way
+  function.bindings.stringSupplier-out-0: demo-strm # new way
   kafka.binder.brokers: "localhost:9092"
-
-

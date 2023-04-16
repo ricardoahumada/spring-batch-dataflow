@@ -8,11 +8,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
+import java.util.function.Supplier;
 
 
 @SpringBootApplication
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 //@EnableBinding(Source.class) // old way
 @Slf4j
+@Configuration
 public class DemoSourceApplication {
 
     public static void main(String[] args) {
@@ -44,6 +50,11 @@ public class DemoSourceApplication {
     @InboundChannelAdapter(channel = Source.OUTPUT, poller = @Poller(fixedDelay = "1000", maxMessagesPerPoll = "1"))
     MessageSource<String> source() {
         return (() -> MessageBuilder.withPayload("Hi").build());
+    }*/
+
+    /*@Bean
+    public Supplier<String> stringSupplier(){
+        return () -> "Hello from Id: " + UUID.randomUUID();
     }*/
 
 }
