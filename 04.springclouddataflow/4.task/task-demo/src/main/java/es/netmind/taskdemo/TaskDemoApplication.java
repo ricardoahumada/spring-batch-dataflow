@@ -18,30 +18,27 @@ import java.util.Date;
 @EnableConfigurationProperties(TaskDemoProperties.class)
 @SpringBootApplication
 public class TaskDemoApplication {
-	private static final Logger logger = LoggerFactory.getLogger(TaskDemoApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(TaskDemoApplication.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(TaskDemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TaskDemoApplication.class, args);
+    }
 
     @Bean
-	public TaskDemo demoTask() {
-		return new TaskDemo();
-	}
+    public TaskDemo demoTask() {
+        return new TaskDemo();
+    }
 
-	/**
-	 * A commandline runner that prints a timestamp.
-	 */
-	public static class TaskDemo implements CommandLineRunner {
+    public static class TaskDemo implements CommandLineRunner {
 
-		@Autowired
-		private TaskDemoProperties config;
+        @Autowired
+        private TaskDemoProperties config;
 
-		@Override
-		public void run(String... strings) {
-			logger.info("This is the message: {}",this.config.getMessage());
-		}
+        @Override
+        public void run(String... strings) {
+            logger.info("This is the message: {}", this.config.getMessage());
+        }
 
-	}
+    }
 
 }
