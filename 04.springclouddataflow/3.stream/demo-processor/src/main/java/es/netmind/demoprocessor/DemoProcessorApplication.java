@@ -37,7 +37,10 @@ public class DemoProcessorApplication {
         return stream.map(text -> "[[" + text + "]]");
     }*/
 
-    @Bean
+    /**
+     * functional approach
+     **/
+//    @Bean
     public Function<Message, Message> convertToUppercase() {
         return (aMess) -> {
             log.info("Received {}", aMess);
@@ -46,5 +49,19 @@ public class DemoProcessorApplication {
             log.info("Sending {}", aMess);
             return aMess;
         };
+    }
+
+    /**
+     * functional reactive approach
+     **/
+    @Bean
+    Function<Flux<Message>, Flux<Message>> processIt() {
+        return payloads -> payloads.map(message -> {
+            log.info("Received reactive {}", message);
+            message.setTitle(message.getTitle().toUpperCase());
+            message.setBody(message.getBody().toUpperCase());
+            log.info("Sending reactive {}", message);
+            return message;
+        });
     }
 }

@@ -3,4 +3,6 @@ spring.cloud.stream.bindings:
   output.destination: my-proc # old way
   convertToUppercase-in-0.destination: my-src # new way
   convertToUppercase-out-0.destination: my-proc # new way
+  processIt-in-0.destination: my-src # new way
+  processIt-out-0.destination: my-proc # new way
 
