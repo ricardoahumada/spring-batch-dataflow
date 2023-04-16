@@ -6,36 +6,39 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cloud.stream.binder.test.InputDestination;
+import org.springframework.cloud.stream.binder.test.OutputDestination;
+import org.springframework.cloud.stream.binder.test.TestChannelBinderConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.GenericMessage;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-//import static org.assertj.core.api.Assertions.assertThat;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = DemoSourceApplication.class)
 @AutoConfigureMockMvc
 //@ActiveProfiles("dev")
+@Import({TestChannelBinderConfiguration.class})
 @Slf4j
 class DemoSourceApplicationTest {
     @Autowired
     private MockMvc mvc;
 
-    /*@Autowired
+    @Autowired
     private InputDestination input;
 
     @Autowired
     private OutputDestination output;
-
-    @Test
-    void when_send_message_then_received() {
-        input.send(new GenericMessage<>("hello".getBytes()));
-        assertThat(output.receive().getPayload()).isEqualTo("HELLO".getBytes());
-    }*/
 
     @Test
     void when_send_get_then_isOk() {

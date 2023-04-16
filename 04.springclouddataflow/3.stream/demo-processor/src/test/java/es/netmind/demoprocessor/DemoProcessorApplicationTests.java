@@ -13,7 +13,10 @@ import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.context.annotation.Import;
 import org.springframework.messaging.support.MessageBuilder;
 
+import java.io.IOException;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 @SpringBootTest(classes = DemoProcessorApplication.class)
 @Slf4j
@@ -36,11 +39,23 @@ class DemoProcessorApplicationTests {
         org.springframework.messaging.Message<Message> inputMessage = MessageBuilder.withPayload(aMessage).build();
         inputDestination.send(inputMessage, "my-src");
 
-        org.springframework.messaging.Message<byte[]> outputMessage = outputDestination.receive( 10000, "my-proc");
+        org.springframework.messaging.Message<byte[]> outputMessage = outputDestination.receive(10000, "my-proc");
 
-        log.info("Received message in test {}",outputMessage);
+        log.info("Received message in test {}", outputMessage.getPayload());
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Message recMessage = null;
+        try {
+            recMessage = objectMapper.readValue(outputMessage.getPayload(), Message.class);
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+
+        log.info("Received message object in test {}", recMessage);
 
         assertThat(outputMessage).isNotNull();
+        assertThat(recMessage.getTitle()).isEqualTo(aMessage.getTitle().toUpperCase());
     }
+
 
 }
