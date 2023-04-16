@@ -7,11 +7,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.annotation.Payloads;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -40,7 +42,10 @@ public class DemoSinkApplication {
      }
  */
 
-    @Bean
+    /**
+     * functional approach
+     **/
+//    @Bean
     public Consumer<Message> onReceive() {
         return (message) -> {
             log.info("Received the value {} in Consumer", message);
@@ -51,6 +56,18 @@ public class DemoSinkApplication {
                 throw new RuntimeException(e);
             }
         };
+    }
+
+    /**
+     * functional reactive approach
+     **/
+    @Bean
+    Consumer<Flux<Message>> logIt() {
+        return payloads -> payloads.subscribe(
+                (Consumer<? super Message>) payload -> {
+                    log.info("logIt => {}", payload);
+                }
+        );
     }
 
 }
