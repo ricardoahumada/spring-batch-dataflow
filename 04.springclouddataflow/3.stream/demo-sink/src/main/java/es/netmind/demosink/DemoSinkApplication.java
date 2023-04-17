@@ -29,23 +29,22 @@ public class DemoSinkApplication {
         SpringApplication.run(DemoSinkApplication.class, args);
     }
 
-
-    /* @StreamListener(Sink.INPUT) // old way
-     void receive(@Payloads String message) {
-         log.info("Received message: " + message);
-         try (PrintWriter out = new PrintWriter("DemoSinkApplication.txt")) {
-             out.println(message);
-         } catch (FileNotFoundException e) {
-             log.error(e.getMessage());
-             throw new RuntimeException(e);
-         }
-     }
- */
+   /* @StreamListener(Sink.INPUT)
+        // old way
+    void receive(@Payloads String message) {
+        log.info("Received message: " + message);
+        try (PrintWriter out = new PrintWriter("DemoSinkApplication.txt")) {
+            out.println(message);
+        } catch (FileNotFoundException e) {
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }*/
 
     /**
      * functional approach
      **/
-//    @Bean
+    @Bean
     public Consumer<Message> onReceive() {
         return (message) -> {
             log.info("Received the value {} in Consumer", message);
@@ -61,7 +60,7 @@ public class DemoSinkApplication {
     /**
      * functional reactive approach
      **/
-    @Bean
+//    @Bean
     Consumer<Flux<Message>> logIt() {
         return payloads -> payloads.subscribe(
                 (Consumer<? super Message>) payload -> {
