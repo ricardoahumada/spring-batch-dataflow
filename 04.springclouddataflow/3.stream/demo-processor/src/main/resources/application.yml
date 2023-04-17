@@ -6,3 +6,6 @@ spring.cloud.stream.bindings:
   processIt-in-0.destination: my-src # new way
   processIt-out-0.destination: my-proc # new way
 
+# for scdf
+spring.cloud.stream.function.bindings.convertToUppercase-in-0: input
+spring.cloud.stream.function.bindings.convertToUppercase-out-0: output

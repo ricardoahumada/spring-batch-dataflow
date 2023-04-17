@@ -1,5 +1,8 @@
 spring.cloud.stream.bindings.input.destination: demo-strm # old way
-spring.cloud.stream.function.bindings.onReceive-in-0: demo-strm
 spring.cloud.stream.bindings.onReceive-in-0.destination: demo-strm
 spring.cloud.stream.bindings.logIt-in-0.destination: demo-strm
+
+# for scdf
+spring.cloud.stream.function.bindings.onReceive-in-0: input
+
 

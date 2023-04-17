@@ -2,17 +2,10 @@ package es.netmind.demosink;
 
 import es.netmind.demosink.model.Message;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.integration.annotation.Payloads;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
 import java.io.FileNotFoundException;

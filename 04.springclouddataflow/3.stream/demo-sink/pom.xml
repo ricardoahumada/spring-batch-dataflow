@@ -10,7 +10,7 @@
     </parent>
     <groupId>es.netmind</groupId>
     <artifactId>demo-sink</artifactId>
-    <version>0.0.8-SNAPSHOT</version>
+    <version>0.0.10-SNAPSHOT</version>
     <name>demo-sink</name>
     <description>Demo project for Spring Boot</description>
     <properties>
