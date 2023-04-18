@@ -53,7 +53,7 @@ public class DemoSinkApplication {
     /**
      * functional reactive approach
      **/
-//    @Bean
+   // @Bean
     Consumer<Flux<Message>> logIt() {
         return payloads -> payloads.subscribe(
                 (Consumer<? super Message>) payload -> {
