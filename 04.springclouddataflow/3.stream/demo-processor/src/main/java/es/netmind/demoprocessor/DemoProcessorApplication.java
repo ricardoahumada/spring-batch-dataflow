@@ -26,9 +26,12 @@ public class DemoProcessorApplication {
 
     /*@StreamListener(Processor.INPUT) // old way
     @SendTo(Processor.OUTPUT)
-    public String process(String text) {
-        log.info("Processing: " + text);
-        return text.toUpperCase();
+    public Message process(Message aMess) {
+        log.info("Received {}", aMess);
+        aMess.setTitle(aMess.getTitle().toUpperCase());
+        aMess.setBody(aMess.getBody().toUpperCase());
+        log.info("Sending {}", aMess);
+        return aMess;
     }*/
 
     /*@StreamListener(Processor.INPUT)
