@@ -37,6 +37,7 @@ public class RecibosProcessorApplication {
                     log.info("validateRecibo::Sending errors {}", errs);
                     return errs;
                 } else {
+                    rec.setEstado(false);
                     rec.setValido(true);
                     log.info("validateRecibo::Sending recibo {}", rec);
                     return rec;
