@@ -1,0 +1,11 @@
+spring.cloud.stream:
+  bindings.output.destination: demo-strm # old way
+  function.bindings.stringSupplier-out-0: demo-strm # new way
+  function.bindings.stringReactSupplier-out-0: demo-strm # new way
+  kafka.binder.brokers: "localhost:9092"
+  poller.fixed-delay: 10000
+
+# for scdf
+spring.cloud.stream.function.bindings.stringSupplier-out-0: output
+
+#spring.integration.poller.fixed-delay: 5000

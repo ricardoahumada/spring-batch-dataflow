@@ -21,19 +21,6 @@ public class ReciboJPAWriter implements ItemWriter<Object> {
     public void write(List<? extends Object> list) throws Exception {
         System.out.println("ReciboJPAWriter write()....:" + list.size());
 
-        Recibo currentRecibo = null;
-        ReciboInvalido currentReciboInv = null;
-        for (Object item : list) {
-            currentRecibo = (Recibo) item;
-            currentRecibo.setId(null);
-            if (!currentRecibo.isValido()) {
-                currentReciboInv = (ReciboInvalido) item;
-                System.out.printf("\t ...writing INVALIDO: %s\n", currentReciboInv);
-                invalidoRepository.save(currentReciboInv);
-            } else {
-                System.out.printf("\t ...writing VALIDO: %s\n", currentRecibo);
-                reciboRepo.save(currentRecibo);
-            }
-        }
+        //  TODO: TRANSFORM EACH LIST OBJECT TO RECIBO AND VERIFY ITS VALIDTY. STORE IN PROPER TABLE.
     }
 }

@@ -13,17 +13,8 @@ public class ReciboValidoProcessor implements ItemProcessor<Recibo, Object> {
 
     @Override
     public Object process(Recibo recibo) {
-        // TODO: HERE GET PAID STATUS AND PROCESS RECIBO
-        Set<String> errores = recibo.esValido();
-
-        if (errores.size() > 0) {
-            recibo.setValido(false);
-            return new ReciboInvalido(recibo, String.join("|", errores));
-
-        } else {
-            recibo.setValido(true);
-            return recibo;
-        }
+        // TODO: HERE VALIDATE RECIBO AND RETURN RECIBO IF VALID OR RECIBO_INVALIDO WITH ERRORS OTHERWISE
+        return null;
     }
 
 }

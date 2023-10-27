@@ -13,7 +13,7 @@ cloud.aws:
   #  credentials.instance-profile: false
   credentials:
     access-key: XXXX
-    secret-key: mqAHdDwp4hSy15f+9mrOvaf8qJ/ccSxKxti0NyzS
+    secret-key: YYYY
 
 # Logging
 logging:
