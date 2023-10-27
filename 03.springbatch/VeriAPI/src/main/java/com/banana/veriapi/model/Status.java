@@ -1,4 +1,4 @@
-package com.netmind.veriapi.model;
+package com.banana.veriapi.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

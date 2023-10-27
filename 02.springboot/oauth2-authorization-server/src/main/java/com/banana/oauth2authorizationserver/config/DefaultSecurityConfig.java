@@ -1,4 +1,4 @@
-package com.netmind.oauth2authorizationserver.config;
+package com.banana.oauth2authorizationserver.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.Customizer;

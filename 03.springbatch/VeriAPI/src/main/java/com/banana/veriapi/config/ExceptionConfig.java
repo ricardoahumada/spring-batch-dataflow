@@ -1,4 +1,4 @@
-package com.netmind.veriapi.config;
+package com.banana.veriapi.config;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

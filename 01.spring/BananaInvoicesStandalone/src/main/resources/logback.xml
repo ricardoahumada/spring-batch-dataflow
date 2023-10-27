@@ -38,7 +38,7 @@
 -->
 
 
-    <logger name="com.netmind" level="trace" additivity="false">
+    <logger name="com.banana" level="trace" additivity="false">
         <appender-ref ref="FILE" />
         <appender-ref ref="Console" />
     </logger>

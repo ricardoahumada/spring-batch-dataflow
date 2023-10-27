@@ -1,4 +1,4 @@
-package com.netmind.oauth2authorizationserver;
+package com.banana.oauth2authorizationserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

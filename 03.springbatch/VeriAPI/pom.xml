@@ -8,7 +8,7 @@
         <version>2.7.11-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.netmind.veri-api</groupId>
+    <groupId>com.banana.veri-api</groupId>
     <artifactId>VeriAPI</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>VeriAPI</name>

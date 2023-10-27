@@ -1,4 +1,4 @@
-package com.netmind.oauth2authorizationserver.config;
+package com.banana.oauth2authorizationserver.config;
 
 
 import com.nimbusds.jose.jwk.JWKSet;

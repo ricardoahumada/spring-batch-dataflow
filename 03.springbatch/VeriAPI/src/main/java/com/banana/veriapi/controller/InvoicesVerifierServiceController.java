@@ -1,7 +1,7 @@
-package com.netmind.veriapi.controller;
+package com.banana.veriapi.controller;
 
-import com.netmind.veriapi.model.Status;
-import com.netmind.veriapi.utils.RandomGenerator;
+import com.banana.veriapi.model.Status;
+import com.banana.veriapi.utils.RandomGenerator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

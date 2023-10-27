@@ -1,4 +1,4 @@
-package com.netmind.veriapi.utils;
+package com.banana.veriapi.utils;
 
 public class RandomGenerator {
     public static final boolean randomBoolean() {
