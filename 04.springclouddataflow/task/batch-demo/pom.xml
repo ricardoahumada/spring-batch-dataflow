@@ -8,7 +8,7 @@
 		<version>2.7.10</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>es.netmind</groupId>
+	<groupId>com.banana</groupId>
 	<artifactId>batch-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>batch-demo</name>

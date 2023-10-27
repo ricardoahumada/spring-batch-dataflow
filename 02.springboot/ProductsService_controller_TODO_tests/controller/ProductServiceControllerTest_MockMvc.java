@@ -1,9 +1,9 @@
-package com.netmind.productsservice.controller;
+package com.banana.productsservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netmind.productsservice.ProductsServiceApplication;
-import com.netmind.productsservice.model.Product;
-import com.netmind.productsservice.persistence.ProductsRepository;
+import com.banana.productsservice.ProductsServiceApplication;
+import com.banana.productsservice.model.Product;
+import com.banana.productsservice.persistence.ProductsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

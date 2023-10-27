@@ -8,7 +8,7 @@
         <version>2.7.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>es.netmind.banana_invoices</groupId>
+    <groupId>com.banana.banana_invoices</groupId>
     <artifactId>BananaInvoicesStandalone</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>banana_invoice_standalone</name>

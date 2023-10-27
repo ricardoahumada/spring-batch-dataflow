@@ -8,7 +8,7 @@
         <version>2.7.11-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>es.netmind</groupId>
+    <groupId>com.banana</groupId>
     <artifactId>demo-source</artifactId>
     <version>0.0.2-SNAPSHOT</version>
     <name>demo-source</name>
