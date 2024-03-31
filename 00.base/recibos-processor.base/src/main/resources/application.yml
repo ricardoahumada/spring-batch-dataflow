@@ -1,0 +1,15 @@
+server.port: 8082
+
+spring.cloud.stream.bindings:
+  input.destination: my-src # old way
+  output.destination: my-proc # old way
+  validateRecibo-in-0.destination: my-src # new way
+  validateRecibo-out-0.destination: my-proc # new way
+  processIt-in-0.destination: my-src # new way
+  processIt-out-0.destination: my-proc # new way
+
+# for scdf
+spring.cloud.stream.function.bindings.validateRecibo-in-0: input
+spring.cloud.stream.function.bindings.validateRecibo-out-0: output
+spring.cloud.stream.function.bindings.processIt-in-0: input
+spring.cloud.stream.function.bindings.processIt-out-0: output
